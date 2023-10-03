@@ -27,10 +27,10 @@ public class RequestHandler extends Thread {
             InputStreamReader input = new InputStreamReader(in, "UTF-8");
             BufferedReader br = new BufferedReader(input);
             String line = br.readLine();
-            String url = HttpRequestUtils.ParseUrl(line);
-            log.debug(url);
+            String tokens[] = line.split(" ");
+            String url = tokens[1];
             DataOutputStream dos = new DataOutputStream(out);
-            byte[] body = Files.readAllBytes(new File("./webapp"+url).toPath());
+            byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
             response200Header(dos, body.length);
             responseBody(dos, body);
         } catch (IOException e) {
