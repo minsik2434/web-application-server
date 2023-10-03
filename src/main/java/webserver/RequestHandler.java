@@ -28,7 +28,7 @@ public class RequestHandler extends Thread {
             BufferedReader br = new BufferedReader(input);
             String line = br.readLine();
             String url = HttpRequestUtils.ParseUrl(line);
-
+            log.debug(url);
             DataOutputStream dos = new DataOutputStream(out);
             byte[] body = Files.readAllBytes(new File("./webapp"+url).toPath());
             response200Header(dos, body.length);

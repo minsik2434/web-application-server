@@ -110,7 +110,7 @@ public class HttpRequestUtils {
     /** HTTP 요청 헤더를 받아 url을 추출하는 함수*/
     public static String ParseUrl(String HttpRequestHeader){
         String url = "";
-        String token[] = HttpRequestHeader.split("/");
+        String token[] = HttpRequestHeader.split(" ");
         url = token[1];
         return url;
     }
