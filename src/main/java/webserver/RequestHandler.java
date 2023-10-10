@@ -31,7 +31,6 @@ public class RequestHandler extends Thread {
 
             InputStreamReader input = new InputStreamReader(in, "UTF-8");
             BufferedReader br = new BufferedReader(input);
-            boolean logined = false;
             String line = br.readLine();
             if(line == null){
                 return;
@@ -39,6 +38,7 @@ public class RequestHandler extends Thread {
             String[] tokens = line.split(" ");
             String url = tokens[1];
             int contentLength = 0;
+            boolean logined = false;
             while(!line.equals("")){
                 line = br.readLine();
                 log.debug(line);
@@ -50,15 +50,15 @@ public class RequestHandler extends Thread {
                     log.debug("login is "+logined);
                 }
             }
-            if("/user/create".startsWith(url)){
-                DataOutputStream dos = new DataOutputStream(out);
+            if("/user/create".equals(url)){
                 String body = IOUtils.readData(br,contentLength);
                 Map<String,String> params = HttpRequestUtils.parseQueryString(body);
                 User user = new User(params.get("userId"),params.get("password"),params.get("name"),params.get("email"));
                 DataBase.addUser(user);
+                DataOutputStream dos = new DataOutputStream(out);
                 response302Header(dos,"/index.html");
             }
-            else if("/user/login".startsWith(url)){
+            else if("/user/login".equals(url)){
                 String body = IOUtils.readData(br,contentLength);
                 Map<String,String> params = HttpRequestUtils.parseQueryString(body);
                 User user = DataBase.findUserById(params.get("userId"));
